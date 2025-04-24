@@ -1,0 +1,65 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "agenda_contatos",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "agenda_contatos (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "agenda_contatos (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "helpers",
+            "cwd": "lib\\helpers",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "helpers (profile mode)",
+            "cwd": "lib\\helpers",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "helpers (release mode)",
+            "cwd": "lib\\helpers",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "ui",
+            "cwd": "lib\\ui",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "ui (profile mode)",
+            "cwd": "lib\\ui",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "ui (release mode)",
+            "cwd": "lib\\ui",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}
