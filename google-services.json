@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "224870101333",
+    "project_id": "chatflutter-udemy-8b1ae",
+    "storage_bucket": "chatflutter-udemy-8b1ae.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:224870101333:android:90b45c4268912ffd48bfdc",
+        "android_client_info": {
+          "package_name": "com.example.chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "224870101333-8i4d0jf1t4ifvroahp49nkhb630e3ndo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.chat",
+            "certificate_hash": "6311b5dea29cf167a42aa85a11d1fe99f04c6922"
+          }
+        },
+        {
+          "client_id": "224870101333-73lhqgjt295ukcapmdr4ng71mqqdjtp2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGRFMTabpednIk1zEtz_-O2itcVBo6wMY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "224870101333-73lhqgjt295ukcapmdr4ng71mqqdjtp2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
