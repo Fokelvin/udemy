@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "401377511416",
+    "project_id": "loja-flutter-fokelvin",
+    "storage_bucket": "loja-flutter-fokelvin.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:401377511416:android:f45e4fc6bf37618bbd380d",
+        "android_client_info": {
+          "package_name": "com.example.loja_virtual"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcGVMqq9i3OpZ_cbDlhP71iMftAJZgrHY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:401377511416:android:e5fc9d4fee9951ecbd380d",
+        "android_client_info": {
+          "package_name": "com.example.loja_virtual_fokelvin1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcGVMqq9i3OpZ_cbDlhP71iMftAJZgrHY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
