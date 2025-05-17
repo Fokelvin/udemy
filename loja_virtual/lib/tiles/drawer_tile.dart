@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class DrawerTile extends StatelessWidget {
   
-  late final IconData icon;
-  late final String title; 
+  final IconData icon;
+  final String title; 
   final PageController controller;
-  late final int page;
-  DrawerTile(this.icon, this.title, this.controller, this.page);
+  final int page;
+  const DrawerTile(this.icon, this.title, this.controller, this.page, {super.key});
 
 
   @override
@@ -18,7 +18,7 @@ class DrawerTile extends StatelessWidget {
           Navigator.of(context).pop();
           controller.jumpToPage(page);
         },
-        child: Container(
+        child: SizedBox(
           height: 60.0,
           child: Row(
             children: <Widget>[

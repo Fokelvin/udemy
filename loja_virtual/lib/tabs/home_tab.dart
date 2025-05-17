@@ -8,7 +8,7 @@ class HomeTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget _buildBodyBack() => Container(
+    Widget buildBodyBack() => Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [
@@ -23,7 +23,7 @@ class HomeTab extends StatelessWidget {
     
     return Stack(
       children: <Widget>[
-        _buildBodyBack(),
+        buildBodyBack(),
         CustomScrollView(
           slivers: [
             const SliverAppBar(

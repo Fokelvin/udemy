@@ -4,9 +4,9 @@ import '../screens/category_screen.dart';
 
 class CategoryTile extends StatelessWidget {
   
-  late final DocumentSnapshot snapshot;
+  final DocumentSnapshot snapshot;
 
-  CategoryTile(this.snapshot);
+  const CategoryTile(this.snapshot, {super.key});
 
   @override
   Widget build(BuildContext context) {

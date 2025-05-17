@@ -7,7 +7,7 @@ class CategoryScreen extends StatelessWidget {
   
   final DocumentSnapshot snapshot;
 
-  CategoryScreen(this.snapshot);
+  const CategoryScreen(this.snapshot, {super.key});
 
   @override
   Widget build(BuildContext context) {

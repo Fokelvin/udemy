@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import '../tiles/drawer_tile.dart';
-
+import '../screens/login_screen.dart';
 class CustomDrawer extends StatelessWidget {
   
   final PageController pageController;
 
-  CustomDrawer(this.pageController);
+  const CustomDrawer(this.pageController, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    Widget _buildDrawerBack() => Container(
+    Widget buildDrawerBack() => Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [
@@ -24,7 +24,7 @@ class CustomDrawer extends StatelessWidget {
     return Drawer(
       child: Stack(
         children: <Widget>[
-          _buildDrawerBack(),
+          buildDrawerBack(),
           ListView(
             padding: EdgeInsets.only(left: 32.0, top: 16.0),
             children: [
@@ -70,7 +70,9 @@ class CustomDrawer extends StatelessWidget {
                               ),
                             ),
                             onTap: (){
-
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) =>LoginScreen()),
+                              );
                             },
                           ),
                         ],

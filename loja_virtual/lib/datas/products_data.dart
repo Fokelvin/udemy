@@ -13,19 +13,13 @@ class ProductsData {
   ProductsData.fromDocument(DocumentSnapshot snapshot){
 
     id = snapshot.id; // Use 'id' instead of 'documentID'
-    final data = snapshot.data() as Map<String, dynamic>; // Explicitly cast data to Map<String, dynamic>
-
-
-    if (data == null) {
-      print("Snapshot data is null!");
-      return;
-    }
-    print("Dados do snapshot: ${data}");    
+    final data = snapshot.data() as Map<String, dynamic>;
+    print("Dados do snapshot: $data");    
     title = data["title"] ?? " Titulo nao carregado";
-    description = data["description"]?? " Description nao carregado";;
-    price = data["price"]?? " Preco nao carregado";;
-    images = data["images"]?? " Imagem nao carregada";;
-    sizes = data["sizes"]?? " Tamanhos nao carregado";;
+    description = data["description"]?? " Description nao carregado";
+    price = data["price"]?? " Preco nao carregado";
+    images = data["images"]?? " Imagem nao carregada";
+    sizes = data["sizes"]?? " Tamanhos nao carregado";
 
   }
 
