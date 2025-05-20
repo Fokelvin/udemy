@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import '../tiles/drawer_tile.dart';
 import '../screens/login_screen.dart';
+import '../models/user_model.dart';
+import 'package:scoped_model/scoped_model.dart';
+
 class CustomDrawer extends StatelessWidget {
   
   final PageController pageController;
@@ -50,32 +53,40 @@ class CustomDrawer extends StatelessWidget {
                     Positioned(
                       left: 0.0,
                       bottom: 0.0,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text("Ola,",
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                          ),
-                          GestureDetector(
-                            child:Text(
-                            "Entre ou Cadastre-se",
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.bold,
+                      child: ScopedModelDescendant<UserModel>(
+                        builder: (context, child, model){
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text("Ola, ${!model.isloggedIn() ? " " : model.userData["name"]}",
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
                               ),
-                            ),
-                            onTap: (){
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) =>LoginScreen()),
-                              );
-                            },
-                          ),
-                        ],
+                              GestureDetector(
+                                child:Text(
+                                  !model.isloggedIn() ? "Entre ou Cadastre-se" : "Sair",
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                onTap: (){
+                                  if(!model.isloggedIn()){
+                                    Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) =>LoginScreen()),
+                                    );                                    
+                                  }else{
+                                    model.signOut();
+                                  }
+                                },
+                              ),
+                            ],
+                          );
+                        },
                       ),
                     )
                   ],

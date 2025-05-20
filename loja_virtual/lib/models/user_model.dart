@@ -62,7 +62,17 @@ class UserModel extends Model{
   bool? isLogged(){
 
   }
+  
+  bool isloggedIn(){
+    return firebaseUser != null;
+  }
 
+  void signOut() async {
+    await _auth.signOut();
+    userData = Map();
+    firebaseUser = null;
+    notifyListeners();
+  }
   Future<void> _saveUserData (Map<String, dynamic> userData)async {
     this.userData = userData;
     await FirebaseFirestore.instance.collection("users").doc(firebaseUser?.uid).set(userData);
