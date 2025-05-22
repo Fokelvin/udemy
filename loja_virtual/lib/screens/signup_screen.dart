@@ -60,9 +60,13 @@ class _SignupScreenState extends State<SignupScreen> {
                 //Email
                 TextFormField(
                   controller: _emailController,
-                  validator: (text){
-                    if(text!.isEmpty || !text.contains("@")) {
-                      return "Insira um e-mail valido";
+                  validator: (String? text) {
+                    // Expressão regular para validar e-mail (padrão comum,
+                    // garantindo que o domínio de nível superior (TLD) tenha pelo menos 2 caracteres)
+                    //.*\@.*\..*
+                    final emailRegex = RegExp(r"^\S+@\S+\.\S+$");
+                    if (text == null || text.isEmpty || !emailRegex.hasMatch(text)) {
+                      return "Insira um e-mail válido";
                     }
                   },
                   decoration: InputDecoration(
@@ -197,7 +201,14 @@ class _SignupScreenState extends State<SignupScreen> {
     });
   }
 
-  void _onFail(){
+  void _onFail(String errorMessage){
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(errorMessage),
+        backgroundColor: Colors.redAccent,
+        duration: Duration(seconds: 3),
+        ),
+      );
     
   }
 }

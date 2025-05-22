@@ -58,7 +58,8 @@ class CustomDrawer extends StatelessWidget {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text("Ola, ${!model.isloggedIn() ? " " : model.userData["name"]}",
+                              Text(
+                                "Ola, ${model.isloggedIn() ? (model.userData["name"] ?? "Carregando...") : ""}",
                                 style: TextStyle(
                                   fontSize: 18.0,
                                   fontWeight: FontWeight.bold,

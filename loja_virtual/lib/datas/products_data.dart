@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart'; // Import the cloud_firestore package
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProductsData {
   
@@ -23,4 +23,11 @@ class ProductsData {
 
   }
 
+  Map<String, dynamic> toResumeMap(){
+    return {
+      "title": title,
+      "description": description,
+      "price": price
+    };
+  }
 }

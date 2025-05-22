@@ -1,4 +1,5 @@
 import 'package:flutter/painting.dart';
+import 'package:flutter/services.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,12 +16,18 @@ class UserModel extends Model{
 
   Map<String, dynamic> userData = {};
 
+  @override
+  void addListener(VoidCallback listener){
+    super.addListener(listener);
+    _loadCurrentUser();
+  }
+
   void signUp({
 
     required Map<String, dynamic> userData,
     required String pass,
     required VoidCallback onSuccess,
-    required VoidCallback onFail,
+    required Function(String) onFail,
 
     }) {
       
@@ -38,25 +45,69 @@ class UserModel extends Model{
         onSuccess();
         isLoading = false;
         notifyListeners();
-      }).catchError((onError){
-        onFail();
+      }).catchError((error){
+        isLoading = false; 
+        notifyListeners();
+
+        String errorMessage;
+
+        if (error is FirebaseAuthException) {
+          switch (error.code) {
+            case 'email-already-in-use':
+            case 'ERROR_EMAIL_ALREADY_IN_USE':
+              errorMessage = 'Este e-mail já está cadastrado.';
+              break;
+            case 'invalid-email':
+              errorMessage = 'O e-mail fornecido é inválido.';
+              break;
+            case 'weak-password':
+              errorMessage = 'A senha fornecida é muito fraca.';
+              break;
+            default:
+              errorMessage = error.message ?? 'Falha ao criar usuário (Firebase).';
+          }
+        } else {
+          errorMessage = 'Ocorreu um erro desconhecido ao criar o usuário.';
+        }
+        onFail(errorMessage);
         isLoading = false;
         notifyListeners();
       });
   }
 
-  void signIn() async {
+  void signIn ({
+
+    required String email, 
+    required String pass, 
+    required VoidCallback onSuccess, 
+    required VoidCallback onFail
+    
+    }) async {
     isLoading = true;
     notifyListeners();
 
-    await Future.delayed(Duration(seconds: 3));
+    _auth.signInWithEmailAndPassword(
+      email: email,
+      password: pass).then(
+        (userData) async {
+          firebaseUser = userData.user;
 
-    isLoading = false;
+          await _loadCurrentUser();
+
+          onSuccess();
+          isLoading = false;
+          notifyListeners();
+        }).catchError((e){
+          onFail();
+          isLoading = false;
+          notifyListeners();
+        });
+    
     notifyListeners();
   }
 
-  void recoverPass(){
-    
+  void recoverPass(String email){
+    _auth.sendPasswordResetEmail(email: email);
   }
 
   bool? isLogged(){
@@ -68,8 +119,13 @@ class UserModel extends Model{
   }
 
   void signOut() async {
+    isLoading = true;
+    notifyListeners();
+    await Future.delayed(Duration(seconds: 1));
     await _auth.signOut();
     userData = Map();
+
+    isLoading = false;
     firebaseUser = null;
     notifyListeners();
   }
@@ -77,5 +133,23 @@ class UserModel extends Model{
     this.userData = userData;
     await FirebaseFirestore.instance.collection("users").doc(firebaseUser?.uid).set(userData);
   }
+
+  Future<Null> _loadCurrentUser() async {
+    if(firebaseUser == null){
+      firebaseUser = await _auth.currentUser;
+      print("Usuário é: ${_auth.currentUser}");
+    }
+      
+    if(firebaseUser != null){
+      if(userData["name"] == null){
+        DocumentSnapshot docUser = 
+        await FirebaseFirestore.instance.collection("users").doc(firebaseUser!.uid).get();
+        userData = docUser.data() as Map<String, dynamic>;
+        print("Usuário agora é:${_auth.currentUser}");
+      }
+    }
+    notifyListeners();
+  }
+
 }
 
