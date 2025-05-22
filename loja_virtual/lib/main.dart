@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
           primaryColor: Color.fromARGB(255, 4, 125, 141),
-        ),
+       ),
         debugShowCheckedModeBanner: false,
         //home: HomeScreen(),
         home: HomeScreen(),
