@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 import '../datas/products_data.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import '../models/user_model.dart';
+import 'cart_screen.dart';
+import 'login_screen.dart';
+import '../models/cart_model.dart';
+import '../datas/cart_product.dart';
 
 class ProductScreen extends StatefulWidget {
 
 final ProductsData product;
 
 const ProductScreen(this.product, {super.key});
+
+static CartModel of(BuildContext context) =>
+  ScopedModel.of<CartModel>(context);
 
   @override
   State<ProductScreen> createState() => _ProductScreenState(product);
@@ -136,7 +145,26 @@ class _ProductScreenState extends State<ProductScreen> {
                   height: 44.0,
                   child: ElevatedButton(
                     onPressed: size != null ?(){
+                      if(UserModel.of(context).isloggedIn()){
 
+                        CartProduct cartProduct = CartProduct();
+                        cartProduct.size = size;
+                        cartProduct.quantity = 1;
+                        cartProduct.pid = product.id;
+                        cartProduct.category = product.category;
+                        
+
+                        CartModel.of(context).addCartItem(cartProduct);
+
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context)=>CartScreen()),
+                        );                        
+
+                      }else{
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context)=>LoginScreen()),
+                        );
+                      }
                     }: null,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primaryColor,
@@ -145,7 +173,8 @@ class _ProductScreenState extends State<ProductScreen> {
                         borderRadius: BorderRadius.zero,
                       )
                     ),
-                    child: Text("Adicionar ao Carrinho",
+                    child: Text(UserModel.of(context).isloggedIn() ? "Adicionar ao Carrinho"
+                    : "Faça Login para adicionar",
                       style: TextStyle(
                         fontSize: 18.0 
                       ),

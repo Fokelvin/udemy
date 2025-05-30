@@ -16,6 +16,9 @@ class UserModel extends Model{
 
   Map<String, dynamic> userData = {};
 
+  static UserModel of(BuildContext context ) =>
+    ScopedModel.of<UserModel>(context);
+
   @override
   void addListener(VoidCallback listener){
     super.addListener(listener);
@@ -135,17 +138,14 @@ class UserModel extends Model{
   }
 
   Future<Null> _loadCurrentUser() async {
-    if(firebaseUser == null){
-      firebaseUser = await _auth.currentUser;
-      print("Usuário é: ${_auth.currentUser}");
-    }
+    firebaseUser ??= await _auth.currentUser;
       
     if(firebaseUser != null){
       if(userData["name"] == null){
         DocumentSnapshot docUser = 
         await FirebaseFirestore.instance.collection("users").doc(firebaseUser!.uid).get();
         userData = docUser.data() as Map<String, dynamic>;
-        print("Usuário agora é:${_auth.currentUser}");
+        //print("Usuário agora é:${_auth.currentUser}");
       }
     }
     notifyListeners();

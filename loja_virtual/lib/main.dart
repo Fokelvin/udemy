@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:loja_virtual/models/cart_model.dart';
 import 'package:loja_virtual/models/user_model.dart';
 import 'package:loja_virtual/screens/home_screen.dart';
 import 'firebase_options.dart';
@@ -22,16 +23,23 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScopedModel<UserModel>(
       model: UserModel(),
-      child: MaterialApp(
-        title: 'Flutter Clothing',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          primaryColor: Color.fromARGB(255, 4, 125, 141),
-       ),
-        debugShowCheckedModeBanner: false,
-        //home: HomeScreen(),
-        home: HomeScreen(),
-      ),
+      child: ScopedModelDescendant<UserModel>(
+        builder: (context, child, model){
+         return ScopedModel<CartModel>(
+            model: CartModel(model), 
+            child: MaterialApp(
+              title: 'Flutter Clothing',
+              theme: ThemeData(
+                primarySwatch: Colors.blue,
+                primaryColor: Color.fromARGB(255, 4, 125, 141),
+              ),
+              debugShowCheckedModeBanner: false,
+              //home: HomeScreen(),
+              home: HomeScreen(),
+            ),
+          );
+        }
+      )
     );
   }
 }

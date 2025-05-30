@@ -24,9 +24,10 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("ENTRAR",
-        style: TextStyle(
-          color: Colors.white,
-        ),),
+          style: TextStyle(
+            color: Colors.white,
+         ),
+        ),
         backgroundColor: Theme.of(context).primaryColor, // Cor de fundo do AppBar
         centerTitle: true,
         actions: <Widget>[

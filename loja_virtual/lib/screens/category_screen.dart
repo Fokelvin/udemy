@@ -30,9 +30,6 @@ class CategoryScreen extends StatelessWidget {
           future: FirebaseFirestore.instance.collection("products").doc(snapshot.id).collection("itens").get(),
           builder: (context, snapshot){
 
-            print("Snapshot Connection State: ${snapshot.connectionState}");
-            print("Snapshot Has Data: ${snapshot.hasData}");
-            print("Snapshot Data: ${snapshot.data?.docs}");
             if(!snapshot.hasData){
               return Center(
                 child: Container(
@@ -57,8 +54,10 @@ class CategoryScreen extends StatelessWidget {
                     ),
                     itemCount: snapshot.data?.docs.length,
                     itemBuilder: (context, index){
-                      print("Grid Item $index: ${snapshot.data!.docs[index].data()}");
-                      return ProductsTile("grid", ProductsData.fromDocument(snapshot.data!.docs[index]));
+
+                      ProductsData data = ProductsData.fromDocument(snapshot.data!.docs[index]);
+                      data.category = this.snapshot.id;
+                      return ProductsTile("grid",data);
                     }
                   ),
                   ListView.builder(
