@@ -4,6 +4,7 @@ import 'package:scoped_model/scoped_model.dart';
 import '../datas/cart_product.dart';
 import 'user_model.dart';
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 class CartModel extends Model{
 
@@ -105,6 +106,61 @@ class CartModel extends Model{
 
   void updatePrices(){
     notifyListeners();
+  }
+
+  Future<String?> finishOrder()async{
+
+    if (user.firebaseUser?.uid == null) {
+      print('Usuário não autenticado');
+      return null;
+    }
+    
+    if(products.length == 0) return null;
+
+    isLoading = true;
+    notifyListeners();
+
+    double prodcutsPrice = getProductPrice();
+    double shipPrice = getShipPrice();
+    double discount = getDiscount();
+
+    DocumentReference refOrder = await FirebaseFirestore.instance.collection("orders").add(
+      {
+        "clientId": user.firebaseUser!.uid,
+        "products": products.map(
+          (cartProduct) => cartProduct.toMap()).toList(),
+        "price": shipPrice,
+        "productsPrice": prodcutsPrice,
+        "discount": discount,
+        "totalPrice" : prodcutsPrice - discount + shipPrice,
+        "status": 1
+      }
+    );
+
+    await FirebaseFirestore.instance.collection("users").doc(user.firebaseUser!.uid)
+    .collection("orders").doc(refOrder.id).set(
+      {
+        "orderId": refOrder.id
+      }
+    );
+
+    QuerySnapshot query = await FirebaseFirestore.instance.collection("users").doc(user.firebaseUser!.uid)
+    .collection("cart").get();
+
+    for(DocumentSnapshot doc in query.docs){
+      doc.reference.delete();
+    }
+
+    products.clear();
+
+    cupomCode = null;
+    discountPercenter = 0;
+
+    isLoading = false;
+    notifyListeners();
+
+    return refOrder.id;
+
   }
 
 }

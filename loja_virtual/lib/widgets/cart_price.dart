@@ -76,7 +76,7 @@ class CartPrice extends StatelessWidget {
                 SizedBox(height: 12.0),
                 ElevatedButton(
                   onPressed: (){
-                    buy;
+                    buy();
                   },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,

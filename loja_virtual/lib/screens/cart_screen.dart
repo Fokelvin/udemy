@@ -7,6 +7,7 @@ import '../tiles/cart_tile.dart';
 import '../widgets/discount_card.dart';
 import '../widgets/ship_card.dart';
 import '../widgets/cart_price.dart';
+import 'order_screen.dart';
 
 class CartScreen extends StatelessWidget {
   
@@ -108,8 +109,16 @@ class CartScreen extends StatelessWidget {
                   ),
                   DiscountCard(),
                   ShipCard(),
-                  CartPrice(
-                    (){}
+                  CartPrice (
+                    ()async {
+                     String? orderId = await model.finishOrder();
+                     if(orderId !=null){
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) => OrderScreen(orderId))
+                      );
+                      print(orderId);
+                     }
+                    }
                   ),
                 ],
               );
