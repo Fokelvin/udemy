@@ -3,6 +3,8 @@ import '../tabs/home_tab.dart';
 import '../widgets/custom_drawer.dart';
 import '../tabs/products_tab.dart';
 import '../widgets/cart_button.dart';
+import '../tabs/orders_tab.dart';
+import '../tabs/places_tabs.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -29,8 +31,21 @@ class HomeScreen extends StatelessWidget {
           body: ProductsTab(),
           floatingActionButton: CartButton(),
         ),
-        Container(color: Colors.yellow,),
-        Container(color: Colors.green,),
+        Scaffold(
+          appBar: AppBar(
+            title: Text("Lojas"),
+          ),
+          body: PlacesTab(),
+          drawer: CustomDrawer(_pageController),
+        ),
+        Scaffold(
+          appBar: AppBar(
+            title: Text("Meus pedidos"),
+            centerTitle: true,
+          ),
+          body: OrdersTab(),
+          drawer: CustomDrawer(_pageController),
+        )
       ],
     );
     //PageView - end
